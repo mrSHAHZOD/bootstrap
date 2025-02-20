@@ -35,6 +35,7 @@ $posts = $statement->fetchAll();
       </div>
     <?php endif; ?>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
       <?php foreach($posts as $post) : ?>
       <div class="col">
         <div class="card shadow-sm">
@@ -43,6 +44,9 @@ $posts = $statement->fetchAll();
             <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
           </svg>
           <div class="card-body">
+            <a href="post.php?post_id=<?= $post['id'] ?>">
+              <h4><?= $post['title'] ?></h4>
+            </a>
             <h4><?= $post["title"] ?></h4>
             <p class="card-text"><?= $post['body'] ?></p>
             <div class="d-flex justify-content-between align-items-center">
