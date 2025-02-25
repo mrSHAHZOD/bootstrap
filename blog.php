@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['DELETE'])) {
   $statement = $pdo->prepare("DELETE FROM posts WHERE id = ?");
   $statement->execute([$post_id]);
 
-  $_SESSION['post-ochirildi'] = 'Post Muvofaqitatli  o\'chirildi';
+  $_SESSION['success'] = 'Post Muvofaqitatli  o\'chirildi';
   header('Location: blog.php');
   exit();
 }
@@ -39,19 +39,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['DELETE'])) {
 
 <div class="album py-5 bg-body-tertiary">
   <div class="container">
-    <?php if (isset($_SESSION['post-yaratildi'])): ?>
+    <!-- // Compare this snippet from bootstrap/blog.php:
+    <?php if (isset($_SESSION['success'])): ?> -->
       <div class="alert alert-success" role="alert">
-        <?= $_SESSION['post-yaratildi'] ?>
-        <?php unset($_SESSION['post-yaratildi']); ?>
+        <?= $_SESSION['success'] ?>
+        <?php unset($_SESSION['success']); ?>
       </div>
     <?php endif; ?>
-    <?php if (isset($_SESSION['post-ochirildi'])): ?>     
-      <div class="alert alert-danger" role="alert">
-        <?= $_SESSION['post-ochirildi'] ?>
-        <?php unset($_SESSION['post-ochirildi']); ?>
+   
 
-      </div>
-    <?php endif; ?>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
       <?php foreach ($posts as $post) : ?>
@@ -69,7 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['DELETE'])) {
               <p class="card-text"><?= $post['body'] ?></p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                  <a href="post-edit.php?post_id=<?= $post['id'] ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
+
                   <form method="POST" action="" onSubmit="return confirm('Rostdan ham o\'chirmoqchimisiz?')">
                     <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
                     <input type="hidden" name="DELETE">
